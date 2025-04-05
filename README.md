@@ -9,12 +9,15 @@
 ├── README.md
 ├── Sources
 │   └── CMyLibrary
-│       ├── include
-│       │   └── mylib.h
-│       └── mylib.c
-└── Tests
-    └── CMyLibraryTests
-        └── CMyLibraryTests.swift
+│       ├── add.S
+│       └── include
+│           └── mylib.h
+├── Tests
+│   └── CMyLibraryTests
+│       └── CMyLibraryTests.swift
+└── asm
+    ├── add_arm64.S
+    └── add_x86_64.S
 ```
 
 ## Test
