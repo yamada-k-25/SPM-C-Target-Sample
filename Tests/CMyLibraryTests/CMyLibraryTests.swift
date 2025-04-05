@@ -3,6 +3,6 @@ import Testing
 
 @Test
 func testAdd() {
-    #expect(add(2,3) == 5)
+    #expect(add_asm(2, 3) == 5)
 }
 
