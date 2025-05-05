@@ -1,3 +1,5 @@
+import Support
+
 /// .bss 開始アドレス
 @_silgen_name("__bss")
 nonisolated(unsafe) var _bss: UInt8
@@ -11,30 +13,13 @@ func memSet(buffer: UnsafeMutableRawPointer, value: UInt8) {
 }
 
 @_silgen_name("kernel_main")
-func kernel_main() {
-  let bssStart = UnsafeRawPointer(&_bss)
-  let bssMutableStart = UnsafeMutableRawPointer(mutating: bssStart)
-  let bytePtr = bssMutableStart.bindMemory(to: UInt8.self, capacity: Int(_bss_end - _bss))
-  let buf = UnsafeMutableBufferPointer(start: bytePtr, count: Int(_bss_end - _bss))
-  memSet(buffer: bssMutableStart, value: 0)
+func kernel_main() { 
+
+    StaticString("\n\nHello, World!\n").withUTF8Buffer { buffer in
+        for i in 0..<buffer.count {
+            putChar(character: buffer[i])
+        }
+    }
+
+    infinite_loop()
 }
-
-// struct kernel_main {
-//   static func main() {
-//     /// .bss セクションの開始ポインタ
-//     let bssStart = UnsafeRawPointer(&_bss)
-//     let bssMutableStart = UnsafeMutableRawPointer(mutating: bssStart)
-
-//     /// .bss セクションの終了ポインタ
-//     let bssEnd = UnsafeRawPointer(&_bss_end)
-
-//     /// セクションサイズ（バイト数）
-//     let bssSize = bssEnd - bssStart  // UnsafeRawPointer 同士の差分で Int が得られる
-
-//     let bytePtr =
-
-//     memSet(buf: bssEnd, value: 0, size: bssSize)
-
-//     while true {}
-//   }
-// }

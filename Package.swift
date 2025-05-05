@@ -5,33 +5,27 @@ import PackageDescription
 
 let package = Package(
   name: "MyPackage",
+  platforms: [.macOS(.v14)],
   products: [
     .library(
       name: "CMyLibrary",
       type: .static,
       targets: ["CMyLibrary"])
   ],
-  // dependencies: [
-  //     .package(
-  //         url: "https://github.com/apple/swift-mmio.git",
-  //         branch: "swift-embedded-examples"
-  //     )
-  // ],
   targets: [
     .target(
       name: "CMyLibrary",
-      // dependencies: [
-      //     .product(name: "MMIO", package: "swift-mmio"),
-      // ],
-      publicHeadersPath: "include",
+      dependencies: [
+        "Support"
+      ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded"),
         .unsafeFlags(["-Xfrontend", "-function-sections"]),
       ]
     ),
-    .target(name: "Support"),
-    .testTarget(
-      name: "CMyLibraryTests",
-      dependencies: ["CMyLibrary"]),
+    .target(
+      name: "Support",
+      publicHeadersPath: "include"
+    ),
   ]
 )
